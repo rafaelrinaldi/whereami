@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-$ npm install -g whereami
+$ npm install -g @rafaelrinaldi/whereami
 ```
 
 ## Usage
