@@ -1,0 +1,49 @@
+{
+  "name": "whereami",
+  "version": "1.0.0",
+  "description": "Get your geolocation information using [freegeoip.net](http://freegeoip.net) from the CLI",
+  "license": "MIT",
+  "repository": "rafaelrinaldi/whereami",
+  "bugs": {
+    "url": "https://github.com/rafaelrinaldi/whereami/issues"
+  },
+  "homepage": "https://github.com/rafaelrinaldi/whereami#readme",
+  "author": {
+    "name": "Rafael Rinaldi",
+    "email": "rafael@rinaldi.io",
+    "url": "http://rinaldi.io"
+  },
+  "bin": {
+    "whereami": "./bin/whereami"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "space-before-function-paren": [2, "never"]
+    }
+  },
+  "scripts": {
+    "lint": "xo",
+    "test": "npm run lint"
+  },
+  "keywords": [
+    "geolocation",
+    "location",
+    "ip",
+    "map",
+    "cli"
+  ],
+  "dependencies": {
+    "got": "^6.1.0",
+    "log-update": "^1.0.2",
+    "minimist": "^1.2.0",
+    "multiline": "^1.0.2",
+    "sexagesimal": "^0.5.0"
+  },
+  "devDependencies": {
+    "xo": "^0.10.0"
+  }
+}

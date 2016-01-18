@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var cli = require('../cli');
+var argv = process.argv.slice(2);
+var options = cli.parse(argv);
+
+process.on('exit', function(code) {
+  if (code === 0 && cli.exitCode) {
+    process.exit(cli.exitCode);
+  }
+});
+
+cli.run(options);
