@@ -17,10 +17,6 @@ Usage: whereami [OPTIONS]
 
   Get geolocation information based on your host's IP address.
 
-Example:
-  $ whereami
-  -23.4733,-46.6658
-
 Options:
   -v --version              Display current software version.
   -h --help                 Display help and usage details.
