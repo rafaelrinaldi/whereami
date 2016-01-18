@@ -26,7 +26,7 @@ var help = multiline(function() {/*
 
 Usage: whereami [OPTIONS]
 
-  Get geolocation information based on your host's IP address.
+  Get your geolocation information using freegeoip.net from the CLI
 
 Example:
   $ whereami

@@ -15,7 +15,7 @@ $ whereami --help
 
 Usage: whereami [OPTIONS]
 
-  Get geolocation information based on your host's IP address.
+  Get your geolocation information using freegeoip.net from the CLI
 
 Options:
   -v --version              Display current software version.
