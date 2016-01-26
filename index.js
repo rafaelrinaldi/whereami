@@ -54,7 +54,10 @@ function formatOutput(data) {
 }
 
 function formatToJson(data) {
-  return {latitude: data.latitude, longitude: data.longitude};
+  return JSON.stringify({
+    latitude: data.latitude,
+    longitude: data.longitude
+  });
 }
 
 function formatToSexagesimal(data) {
