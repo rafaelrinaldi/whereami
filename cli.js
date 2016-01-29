@@ -3,7 +3,6 @@
 const whereami = require('./');
 const minimist = require('minimist');
 const version = require('./package.json').version;
-const multiline = require('multiline');
 const defaults = {
   boolean: [
     'help',
@@ -21,9 +20,7 @@ const defaults = {
   }
 };
 
-/* eslint-disable */
-const help = multiline(function() {/*
-
+const help = `
 Usage: whereami [OPTIONS]
 
   Get your geolocation information using freegeoip.net from the CLI
@@ -37,9 +34,7 @@ Options:
   -h --help                 Display help and usage details.
   -f --format               Output format (either json or sexagesimal).
   -r --raw                  Output raw data from freegeoip.net.
-
-*/});
-/* eslint-enable */
+`;
 
 const logError = error => {
   const message = typeof error === 'string' ? error : error.message;
