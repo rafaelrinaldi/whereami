@@ -1,9 +1,10 @@
 'use strict';
 
-var whereami = require('./');
-var minimist = require('minimist');
-var multiline = require('multiline');
-var defaults = {
+const whereami = require('./');
+const minimist = require('minimist');
+const version = require('./package.json').version;
+const multiline = require('multiline');
+const defaults = {
   boolean: [
     'help',
     'version',
@@ -19,10 +20,9 @@ var defaults = {
     raw: false
   }
 };
-var version = require('./package.json').version;
 
 /* eslint-disable */
-var help = multiline(function() {/*
+const help = multiline(function() {/*
 
 Usage: whereami [OPTIONS]
 
@@ -41,6 +41,16 @@ Options:
 */});
 /* eslint-enable */
 
+const logError = error => {
+  const message = typeof error === 'string' ? error : error.message;
+
+  exports.exitCode = 1;
+
+  exports.stderr.write(`${message}\n`);
+};
+
+const run = argv => whereami(argv).catch(logError);
+
 // Must be ≠ 0 if any errors occur during execution
 exports.exitCode = 0;
 
@@ -48,11 +58,9 @@ exports.exitCode = 0;
 exports.stdout = process.stdout;
 exports.stderr = process.stderr;
 
-exports.parse = function(options) {
-  return minimist(options, defaults);
-};
+exports.parse = options => minimist(options, defaults);
 
-exports.run = function(argv) {
+exports.run = argv => {
   // Reset status code at each run
   exports.exitCode = 0;
 
@@ -62,26 +70,14 @@ exports.run = function(argv) {
   }
 
   if (argv.version) {
-    exports.stderr.write('whereami v' + version + '\n');
+    exports.stderr.write(`whereami v${version}\n`);
     return;
   }
 
   if (argv.format && 'json sexagesimal'.split(/\s/).indexOf(argv.format) < 0) {
-    exports.stderr.write('format "' + argv.format + '" is not supported');
+    exports.stderr.write(`Format ${argv.format} is not supported`);
     return;
   }
 
   run(argv);
 };
-
-function run(argv) {
-  whereami(argv).catch(logError);
-}
-
-function logError(error) {
-  var message = typeof error === 'string' ? error : error.message;
-
-  exports.exitCode = 1;
-
-  exports.stderr.write(message + '\n');
-}
