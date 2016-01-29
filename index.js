@@ -1,37 +1,37 @@
 'use strict';
 
-var got = require('got');
-var logUpdate = require('log-update');
-var sexagesimal = require('sexagesimal');
-var headers = {
+const got = require('got');
+const logUpdate = require('log-update');
+const sexagesimal = require('sexagesimal');
+const headers = {
   'user-agent': 'https://github.com/rafaelrinaldi/whereami'
 };
 
-function whereami(options) {
-  var interval = loading();
+const whereami = options => {
+  const interval = loading();
 
-  return got('freegeoip.net/json/', {headers: headers}).then(function(response) {
+  return got('freegeoip.net/json/', { headers }).then(response => {
     loaded(interval);
     handleResponseBody(JSON.parse(response.body), options);
   });
 }
 
-function loading() {
-  var frames = ['-', '\\', '|', '/'];
-  var frame = 0;
+const loading = () => {
+  const frames = ['-', '\\', '|', '/'];
+  let frame = 0;
 
-  return setInterval(function() {
+  return setInterval(() => {
     logUpdate(frames[frame = ++frame % frames.length]);
   }, 100);
 }
 
-function loaded(interval) {
+const loaded = interval => {
   logUpdate.clear();
   clearInterval(interval);
 }
 
-function handleResponseBody(body, options) {
-  var output = '';
+const handleResponseBody = (body, options) => {
+  let output = '';
 
   if (options.raw) {
     console.log(JSON.stringify(body));
@@ -49,22 +49,20 @@ function handleResponseBody(body, options) {
   console.log(output);
 }
 
-function formatOutput(data) {
-  return data.latitude + ',' + data.longitude;
-}
+const formatOutput = data => `${data.latitude},${data.longitude}`;
 
-function formatToJson(data) {
+const formatToJson = data => {
   return JSON.stringify({
     latitude: data.latitude,
     longitude: data.longitude
   });
 }
 
-function formatToSexagesimal(data) {
-  var latitude = sexagesimal.format(data.latitude, 'lat');
-  var longitude = sexagesimal.format(data.longitude, 'lon');
+const formatToSexagesimal = data => {
+  const latitude = sexagesimal.format(data.latitude, 'lat');
+  const longitude = sexagesimal.format(data.longitude, 'lon');
 
-  return latitude + ',' + longitude;
+  return `${latitude},${longitude}`;
 }
 
 module.exports = whereami;
