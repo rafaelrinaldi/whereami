@@ -1,25 +1,12 @@
 'use strict';
 
 const Promise = require('pinkie-promise');
+const loading = require('loading-indicator');
 const got = require('got');
 const logUpdate = require('log-update');
 const sexagesimal = require('sexagesimal');
 const headers = {
   'user-agent': 'https://github.com/rafaelrinaldi/whereami'
-};
-
-const loading = () => {
-  const frames = ['-', '\\', '|', '/'];
-  let frame = 0;
-
-  return setInterval(() => {
-    logUpdate(frames[frame = ++frame % frames.length]);
-  }, 100);
-};
-
-const loaded = interval => {
-  logUpdate.clear();
-  clearInterval(interval);
 };
 
 const formatToDefault = data => `${data.latitude},${data.longitude}`;
@@ -63,7 +50,7 @@ const formatOutput = (data, options) => {
 };
 
 const whereami = options => {
-  const interval = loading();
+  const interval = loading.start();
 
   return got('freegeoip.net/json/', {headers})
     .then(response => {
@@ -71,12 +58,12 @@ const whereami = options => {
     })
     // Actually logs the output
     .then((response => {
-      loaded(interval);
+      loading.stop(interval);
       console.log(response);
       return response;
     }))
     .catch(error => {
-      loaded(interval);
+      loading.stop(interval);
       // The standard for error messages is lowercase, minor tweak to improve output
       const message = error.message.replace(/^\w/, string => string.toUpperCase());
       console.log(message);
