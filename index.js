@@ -3,7 +3,6 @@
 const Promise = require('pinkie-promise');
 const loading = require('loading-indicator');
 const got = require('got');
-const logUpdate = require('log-update');
 const sexagesimal = require('sexagesimal');
 const headers = {
   'user-agent': 'https://github.com/rafaelrinaldi/whereami'
