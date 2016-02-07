@@ -30,10 +30,10 @@ Example:
   -23.4733,-46.6658
 
 Options:
-  -v --version              Display current software version.
-  -h --help                 Display help and usage details.
-  -f --format               Output format (either json or sexagesimal).
-  -r --raw                  Output raw data from freegeoip.net.
+  -v --version              Display current software version
+  -h --help                 Display help and usage details
+  -f --format               Output format (either human, json or sexagesimal)
+  -r --raw                  Output raw data from freegeoip.net
 `;
 
 const logError = error => {
@@ -69,7 +69,7 @@ exports.run = argv => {
     return;
   }
 
-  if (argv.format && 'json sexagesimal'.split(/\s/).indexOf(argv.format) < 0) {
+  if (argv.format && 'human json sexagesimal'.split(/\s/).indexOf(argv.format) < 0) {
     exports.stderr.write(`Format ${argv.format} is not supported`);
     return;
   }

@@ -11,17 +11,19 @@ $ npm install -g @rafaelrinaldi/whereami
 ## Usage
 
 ```sh
-$ whereami --help
-
 Usage: whereami [OPTIONS]
 
   Get your geolocation information using freegeoip.net from the CLI
 
+Example:
+  $ whereami
+  -23.4733,-46.6658
+
 Options:
-  -v --version              Display current software version.
-  -h --help                 Display help and usage details.
-  -f --format               Output format (either json or sexagesimal).
-  -r --raw                  Output raw data from freegeoip.net.
+  -v --version              Display current software version
+  -h --help                 Display help and usage details
+  -f --format               Output format (either human, json or sexagesimal)
+  -r --raw                  Output raw data from freegeoip.net
 ```
 
 ## License

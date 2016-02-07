@@ -1,5 +1,6 @@
 'use strict';
 
+const Promise = require('pinkie-promise');
 const got = require('got');
 const logUpdate = require('log-update');
 const sexagesimal = require('sexagesimal');
@@ -21,7 +22,7 @@ const loaded = interval => {
   clearInterval(interval);
 };
 
-const formatOutput = data => `${data.latitude},${data.longitude}`;
+const formatToDefault = data => `${data.latitude},${data.longitude}`;
 
 const formatToJson = data => {
   return JSON.stringify({
@@ -37,32 +38,50 @@ const formatToSexagesimal = data => {
   return `${latitude},${longitude}`;
 };
 
-const handleResponseBody = (body, options) => {
-  let output = '';
+const formatToHuman = data => {
+  if (!data.region_name || !data.region_name.trim().length) {
+    return Promise.reject(new Error('unable to retrieve region'));
+  }
 
+  return `${data.region_name}`;
+};
+
+const formatOutput = (data, options) => {
   if (options.raw) {
-    console.log(JSON.stringify(body));
-    return;
+    return JSON.stringify(data);
   }
 
   if (options.format === 'sexagesimal') {
-    output = formatToSexagesimal(body);
+    return formatToSexagesimal(data);
   } else if (options.format === 'json') {
-    output = formatToJson(body);
-  } else {
-    output = formatOutput(body);
+    return formatToJson(data);
+  } else if (options.format === 'human') {
+    return formatToHuman(data);
   }
 
-  console.log(output);
+  return formatToDefault(data);
 };
 
 const whereami = options => {
   const interval = loading();
 
-  return got('freegeoip.net/json/', {headers}).then(response => {
-    loaded(interval);
-    handleResponseBody(JSON.parse(response.body), options);
-  });
+  return got('freegeoip.net/json/', {headers})
+    .then(response => {
+      return formatOutput(JSON.parse(response.body), options);
+    })
+    // Actually logs the output
+    .then((response => {
+      loaded(interval);
+      console.log(response);
+      return response;
+    }))
+    .catch(error => {
+      loaded(interval);
+      // The standard for error messages is lowercase, minor tweak to improve output
+      const message = error.message.replace(/^\w/, string => string.toUpperCase());
+      console.log(message);
+      return error;
+    });
 };
 
 module.exports = whereami;
