@@ -25,9 +25,9 @@ const formatToSexagesimal = data => {
 };
 
 const formatToHuman = data => {
-  const country = data.country_name;
-  const region = data.region_name;
-  const city = data.city;
+  if (!data.country_name && !data.region_name && !data.city) {
+    return Promise.reject(new Error('unable to retrieve region'));
+  }
 
   return [data.city, data.region_name, data.country_name]
     .filter(field => field && field.trim().length)
