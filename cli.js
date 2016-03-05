@@ -29,6 +29,9 @@ Example:
   $ whereami
   -23.4733,-46.6658
 
+  $ whereami --f human
+  San Francisco, CA, United States
+
 Options:
   -v --version              Display current software version
   -h --help                 Display help and usage details
