@@ -19,18 +19,8 @@
   "engines": {
     "node": ">=4"
   },
-  "xo": {
-    "esnext": true,
-    "space": true,
-    "rules": {
-      "space-before-function-paren": [
-        2,
-        "never"
-      ]
-    }
-  },
   "scripts": {
-    "lint": "xo",
+    "lint": "xo --space --esnext=true",
     "test": "npm run lint"
   },
   "keywords": [
