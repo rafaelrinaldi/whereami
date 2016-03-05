@@ -25,11 +25,14 @@ const formatToSexagesimal = data => {
 };
 
 const formatToHuman = data => {
-  if (!data.region_name || !data.region_name.trim().length) {
-    return Promise.reject(new Error('unable to retrieve region'));
-  }
+  const country = data.country_name;
+  const region = data.region_name;
+  const city = data.city;
 
-  return `${data.region_name}`;
+  return [data.city, data.region_name, data.country_name]
+    .filter(field => field && field.trim().length)
+    .map(output => output)
+    .join(', ');
 };
 
 const formatOutput = (data, options) => {
