@@ -23,7 +23,7 @@ const defaults = {
 const help = `
 Usage: whereami [OPTIONS]
 
-  Get your geolocation information using freegeoip.net from the CLI
+  Get your geolocation information using http://ipinfo.io/ from the CLI
 
 Example:
   $ whereami
@@ -36,7 +36,7 @@ Options:
   -v --version              Display current software version
   -h --help                 Display help and usage details
   -f --format               Output format (either human, json or sexagesimal)
-  -r --raw                  Output raw data from freegeoip.net
+  -r --raw                  Output raw data from http://ipinfo.io/
 `;
 
 const logError = error => {

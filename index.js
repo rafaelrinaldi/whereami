@@ -8,28 +8,30 @@ const headers = {
   'user-agent': 'https://github.com/rafaelrinaldi/whereami'
 };
 
-const formatToDefault = data => `${data.latitude},${data.longitude}`;
+const formatToDefault = data => `${data.loc}`;
 
 const formatToJson = data => {
+  var latlong = data.loc.split(',');
   return JSON.stringify({
-    latitude: data.latitude,
-    longitude: data.longitude
+    latitude: latlong[0],
+    longitude: latlong[1]
   });
 };
 
 const formatToSexagesimal = data => {
-  const latitude = sexagesimal.format(data.latitude, 'lat');
-  const longitude = sexagesimal.format(data.longitude, 'lon');
+  var latlong = data.loc.split(',');
+  const latitude = sexagesimal.format(latlong[0], 'lat');
+  const longitude = sexagesimal.format(latlong[1], 'lon');
 
   return `${latitude},${longitude}`;
 };
 
 const formatToHuman = data => {
-  if (!data.country_name && !data.region_name && !data.city) {
+  if (!data.country && !data.region && !data.city) {
     return Promise.reject(new Error('unable to retrieve region'));
   }
 
-  return [data.city, data.region_name, data.country_name]
+  return [data.city, data.region, data.country]
     .filter(field => field && field.trim().length)
     .map(output => output)
     .join(', ');
@@ -54,7 +56,7 @@ const formatOutput = (data, options) => {
 const whereami = options => {
   const interval = loading.start();
 
-  return got('freegeoip.net/json/', {headers})
+  return got('ipinfo.io/json', {headers})
     .then(response => {
       return formatOutput(JSON.parse(response.body), options);
     })
