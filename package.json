@@ -1,6 +1,6 @@
 {
   "name": "@rafaelrinaldi/whereami",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Get your geolocation information using [freegeoip.net](http://freegeoip.net) from the CLI",
   "license": "MIT",
   "repository": "rafaelrinaldi/whereami",
