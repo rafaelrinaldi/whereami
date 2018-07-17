@@ -54,7 +54,7 @@ const formatOutput = (data, options) => {
 const whereami = options => {
   const interval = loading.start();
 
-  return got('freegeoip.net/json/', {headers})
+  return got('freegeoip.app/json/', {headers})
     .then(response => {
       return formatOutput(JSON.parse(response.body), options);
     })
