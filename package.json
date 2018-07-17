@@ -1,6 +1,6 @@
 {
   "name": "@rafaelrinaldi/whereami",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Get your geolocation information using freegeoip.app",
   "license": "MIT",
   "repository": "rafaelrinaldi/whereami",
