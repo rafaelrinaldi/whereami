@@ -31,7 +31,7 @@
     "cli"
   ],
   "dependencies": {
-    "got": "^6.1.0",
+    "got": "^8.3.2",
     "loading-indicator": "^2.0.0",
     "minimist": "^1.2.0",
     "pinkie-promise": "^2.0.0",
