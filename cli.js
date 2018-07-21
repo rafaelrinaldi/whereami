@@ -1,14 +1,8 @@
-'use strict';
-
-const whereami = require('./');
-const minimist = require('minimist');
-const version = require('./package.json').version;
-const defaults = {
-  boolean: [
-    'help',
-    'version',
-    'raw'
-  ],
+const whereami = require('./')
+const minimist = require('minimist')
+const Loading = require('loading-indicator')
+const options = {
+  boolean: ['help', 'version', 'raw'],
   alias: {
     h: 'help',
     v: 'version',
@@ -16,9 +10,13 @@ const defaults = {
     r: 'raw'
   },
   default: {
-    raw: false
+    raw: false,
+    format: 'sexagesimal'
   }
-};
+}
+
+const argv = minimist(process.argv.slice(2), options)
+const [ipOrHostname] = argv._
 
 const help = `
 Usage: whereami [OPTIONS]
@@ -37,45 +35,36 @@ Options:
   -h --help                 Display help and usage details
   -f --format               Output format (either human, json or sexagesimal)
   -r --raw                  Output raw data from freegeoip.net
-`;
+`
 
-const logError = error => {
-  const message = typeof error === 'string' ? error : error.message;
+function exitWithSuccess (message) {
+  process.stdout.write(`${message}\n`)
+  process.exit(0)
+}
 
-  exports.exitCode = 1;
+function exitWithError (message, code = 1) {
+  process.stderr.write(`${message}\n`)
+  process.exit(code)
+}
 
-  exports.stderr.write(`${message}\n`);
-};
+if (argv.help) exitWithSuccess(help)
+if (argv.version) exitWithSuccess(require('./package.json').version)
 
-const run = argv => whereami(argv).catch(logError);
+const isValidFormat = ['human', 'json', 'sexagesimal'].includes(argv.format)
 
-// Must be ≠ 0 if any errors occur during execution
-exports.exitCode = 0;
+if (!isValidFormat) exitWithError(`Format "${argv.format}" is not supported`)
 
-// Allow mocking the stdout/stderr
-exports.stdout = process.stdout;
-exports.stderr = process.stderr;
+async function run () {
+  const loading = Loading.start()
 
-exports.parse = options => minimist(options, defaults);
-
-exports.run = argv => {
-  // Reset status code at each run
-  exports.exitCode = 0;
-
-  if (argv.help) {
-    exports.stderr.write(help);
-    return;
+  try {
+    const output = await whereami({ ...argv, ipOrHostname })
+    Loading.stop(loading)
+    exitWithSuccess(output)
+  } catch (error) {
+    Loading.stop(loading)
+    exitWithError(error.message)
   }
+}
 
-  if (argv.version) {
-    exports.stderr.write(`whereami v${version}\n`);
-    return;
-  }
-
-  if (argv.format && 'human json sexagesimal'.split(/\s/).indexOf(argv.format) < 0) {
-    exports.stderr.write(`Format ${argv.format} is not supported`);
-    return;
-  }
-
-  run(argv);
-};
+run()
