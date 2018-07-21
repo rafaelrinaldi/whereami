@@ -4,23 +4,14 @@
   "description": "Get your geolocation information using freegeoip.app",
   "license": "MIT",
   "repository": "rafaelrinaldi/whereami",
-  "bugs": {
-    "url": "https://github.com/rafaelrinaldi/whereami/issues"
-  },
-  "homepage": "https://github.com/rafaelrinaldi/whereami#readme",
-  "author": {
-    "name": "Rafael Rinaldi",
-    "email": "rafael@rinaldi.io",
-    "url": "http://rinaldi.io"
-  },
-  "bin": {
-    "whereami": "./bin/whereami"
-  },
+  "main": "index.js",
+  "bin": "cli.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=8.6"
   },
   "scripts": {
-    "lint": "xo --space --esnext=true",
+    "format": "prettier-standard *.js",
+    "lint": "npm run format; standard *.js",
     "test": "npm run lint"
   },
   "keywords": [
@@ -31,13 +22,13 @@
     "cli"
   ],
   "dependencies": {
-    "got": "^6.1.0",
+    "@mapbox/sexagesimal": "^1.1.0",
+    "got": "^8.3.2",
     "loading-indicator": "^2.0.0",
-    "minimist": "^1.2.0",
-    "pinkie-promise": "^2.0.0",
-    "sexagesimal": "^0.5.0"
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "xo": "^0.13.0"
+    "prettier-standard": "^8.0.1",
+    "standard": "^11.0.1"
   }
 }
