@@ -19,7 +19,7 @@ Example:
   $ whereami
   -23.4733,-46.6658
 
-  $ whereami --f human
+  $ whereami -f human
   San Francisco, CA, United States
 
 Options:
