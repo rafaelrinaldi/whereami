@@ -22,6 +22,9 @@ Example:
   $ whereami -f human
   San Francisco, CA, United States
 
+  $ whereami 2.151.255.255 -f human
+  Stabekk, Akershus, Norway
+
 Options:
   -v --version              Display current software version
   -h --help                 Display help and usage details
