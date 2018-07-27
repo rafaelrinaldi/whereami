@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const whereami = require('./')
 const minimist = require('minimist')
 const Loading = require('loading-indicator')
