@@ -18,9 +18,7 @@ const formatToSexagesimal = data => {
 }
 
 const formatToHuman = data => {
-  if (!data.country_name && !data.region_name && !data.city) {
-    return Promise.reject(new Error('Unable to retrieve region'))
-  }
+  if (!data.country_name && !data.region_name && !data.city) { throw new Error('Unable to retrieve region') }
 
   return [data.city, data.region_name, data.country_name]
     .filter(Boolean)
