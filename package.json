@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@mapbox/sexagesimal": "^1.2.0",
-    "got": "^9.6.0",
+    "got": "^10.0.3",
     "loading-indicator": "^2.0.0",
     "minimist": "^1.2.0"
   },
