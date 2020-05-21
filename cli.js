@@ -9,11 +9,13 @@ const options = {
     h: 'help',
     v: 'version',
     f: 'format',
-    r: 'raw'
+    r: 'raw',
+    n: 'noanim'
   },
   default: {
     raw: false,
-    format: 'sexagesimal'
+    format: 'sexagesimal',
+    noanim: false
   }
 }
 
@@ -60,14 +62,16 @@ const isValidFormat = ['human', 'json', 'sexagesimal'].includes(argv.format)
 if (!isValidFormat) exitWithError(`Format "${argv.format}" is not supported`)
 
 async function run () {
-  const loading = Loading.start()
+  const loading = argv.noanim ? null : Loading.start()
 
   try {
     const output = await whereami({ ...argv, ipOrHostname })
-    Loading.stop(loading)
+    if (loading) 
+      Loading.stop(loading)
     exitWithSuccess(output)
   } catch (error) {
-    Loading.stop(loading)
+    if (loading)
+      Loading.stop(loading)
     exitWithError(error.message)
   }
 }
